@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>Lista de Listas</h1>
+{% if listas %}
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="">Listas</label>
+        <select name="id_lista" class="form-control">
+            <option value="">Selecione uma lista</option>
+            {% for lista in listas %}
+            <option value="{{ lista.id }}">{{ lista }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <input class="btn btn-primary form-control" value="Enviar"
+           name="enviar"
+           type="submit"/>
+</form>
+{% endif %}
+{% if itens %}
+<div>
+    <ul>
+        {% for item in itens %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<a class="btn btn-success" href="{% url 'base:listas' %}">Limpar</a>
+{% endif %}
+{% endblock %}

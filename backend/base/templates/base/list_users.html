@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <h1>Lista de Usuários</h1>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="">Listas</label>
+        <select name="id_lista" class="form-control">
+            <option value="">Selecione uma lista</option>
+            {% for user in users %}
+            <option value="{{ lista.id }}">{{ user }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <input class="btn btn-primary form-control" value="Enviar"
+           name="enviar"
+           type="submit"/>
+</form>
+
+
+{% endblock %}
