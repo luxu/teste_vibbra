@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from backend.base.models import Lists, Item, Usuary
+from backend.base.models import Userlist, Item
 
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
-        'lists',
+        # 'lists',
     )
 
 
@@ -16,27 +16,26 @@ class ItemsInline(admin.TabularInline):
 
 
 class ListsAdmin(admin.ModelAdmin):
+    inlines = (ItemsInline,)
     list_display = (
         '__str__',
+        'get_user_name',
     )
-    inlines = (ItemsInline,)
+
+    @admin.display(description='Usuário', ordering='user__username')
+    def get_user_name(self, obj):
+        return obj.user
 
 
 class ListsInline(admin.TabularInline):
-    model = Lists
-
-    def has_add_permission(self, request, obj=None):
-        return False
+    model = Userlist
 
 
 class UsuaryAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
     )
-    inlines = (ListsInline,)
 
 
-
-admin.site.register(Lists, ListsAdmin)
-admin.site.register(Usuary, UsuaryAdmin)
+admin.site.register(Userlist, ListsAdmin)
 admin.site.register(Item, ItemAdmin)

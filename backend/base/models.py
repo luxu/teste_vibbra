@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from backend import settings
 from backend.base import constants
 
 
@@ -17,36 +18,19 @@ class Base(models.Model):
         abstract = True
 
 
-class Usuary(Base):
-    user = models.OneToOneField(
-        User,
-        related_name='user_usuary',
-        on_delete=models.CASCADE
-    )
-
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        verbose_name = 'Usuário'
-        verbose_name_plural = 'Usuários'
-
-
-class Lists(Base):
-    name = models.CharField(
+class Userlist(Base):
+    title = models.CharField(
         'Nome da lista',
         max_length=50
     )
     user = models.ForeignKey(
-        Usuary,
+        User,
         on_delete=models.CASCADE,
         related_name='user_list',
-        null=True, blank=True
     )
 
     def __str__(self):
-        return self.name
+        return self.title
 
     class Meta:
         verbose_name = 'Lista'
@@ -54,18 +38,22 @@ class Lists(Base):
 
 
 class Item(Base):
-    description = models.CharField(
-        'Descrição do Item',
+    title = models.CharField(
+        'Título',
         max_length=50
     )
-    lists = models.ForeignKey(
-        Lists,
+    description = models.CharField(
+        'Descrição',
+        max_length=50
+    )
+    userlist = models.ForeignKey(
+        Userlist,
         related_name='lists',
         on_delete=models.CASCADE,
     )
-    father = models.ForeignKey(
+    parent = models.ForeignKey(
         'self',
-        related_name='father_item',
+        related_name='sub_itens',
         on_delete=models.CASCADE,
         null=True, blank=True
     )
