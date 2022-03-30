@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from backend.base.models import Lists, Item, User
+from backend.base.models import Userlist, Item, User
 
 
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
 
 def list_listas(request):
     template_name = 'base/list_listas.html'
-    listas = Lists.objects.all()
+    listas = Userlist.objects.all()
     if request.POST.get('enviar'):
         id_lista = int(request.POST.get('id_lista'))
         itens = Item.objects.filter(lists__id=id_lista)
@@ -30,6 +30,7 @@ def list_itens(request):
         'itens': itens
     }
     return render(request, template_name, context)
+
 
 def list_users(request):
     template_name = 'base/list_users.html'
