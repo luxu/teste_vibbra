@@ -2,7 +2,6 @@ import os
 from functools import partial
 from pathlib import Path
 
-# import cloudinary.api
 import dj_database_url
 from decouple import config, Csv
 
@@ -23,7 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-    # 'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'drf_yasg',
     'djoser',

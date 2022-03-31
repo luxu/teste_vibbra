@@ -1,7 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
 
-from backend import settings
 from backend.base import constants
 
 
@@ -18,44 +16,20 @@ class Base(models.Model):
         abstract = True
 
 
-class Userlist(Base):
-    title = models.CharField(
-        'Nome da lista',
+class Projeto(Base):
+    description = models.CharField(
+        "Descrição",
         max_length=50
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='user_list',
     )
 
     def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Lista'
-        verbose_name_plural = 'Listas'
+        return self.description
 
 
-class Item(Base):
+class Tempo(Base):
     title = models.CharField(
         'Título',
         max_length=50
-    )
-    description = models.CharField(
-        'Descrição',
-        max_length=50
-    )
-    userlist = models.ForeignKey(
-        Userlist,
-        related_name='lists',
-        on_delete=models.CASCADE,
-    )
-    parent = models.ForeignKey(
-        'self',
-        related_name='sub_itens',
-        on_delete=models.CASCADE,
-        null=True, blank=True
     )
 
     def __str__(self):

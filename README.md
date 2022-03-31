@@ -1,6 +1,4 @@
-# Projeto TODO List
-
-Exemplo de um projeto simples com Django.
+# Projeto Ampulheta
 
 ## Como rodar o projeto?
 
@@ -22,10 +20,3 @@ python manage.py createsuperuser --username="admin" --email=""
 ```
 
 ## Consulta a API
-
-````
-import requests
-url = "https://project-biblioteca.herokuapp.com/api/books/"
-response = requests.get(url)
-response.json()
-````
