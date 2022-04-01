@@ -1,5 +1,7 @@
 # Projeto Ampulheta
 
+O aplicativo tem como público alvo profissionais que tem a necessidade de apontar horas de trabalho em projetos associados.
+
 ## Como rodar o projeto?
 
 * Clone esse repositório.

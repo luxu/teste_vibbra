@@ -1,40 +1,46 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-from backend.base import constants
 
-
-class Base(models.Model):
-    """ Base parent model for all the models """
-    created_at = models.DateTimeField("Criado em", auto_now_add=True, null=True)
-    modified_at = models.DateTimeField("Atualizado em", auto_now=True, null=True)
-    status = models.BooleanField(choices=constants.STATUS, default=constants.ATIVO)
-
-    def __init__(self, *args, **kwargs):
-        super(Base, self).__init__(*args, **kwargs)
-
-    class Meta:
-        abstract = True
-
-
-class Projeto(Base):
-    description = models.CharField(
-        "Descrição",
-        max_length=50
-    )
-
-    def __str__(self):
-        return self.description
-
-
-class Tempo(Base):
+class Projeto(models.Model):
     title = models.CharField(
-        'Título',
-        max_length=50
+        verbose_name="Título do projeto",
+        max_length=50,
+        null=False, blank=False
+    )
+    description = models.CharField(
+        verbose_name="Descrição do projeto",
+        max_length=50,
+        null=True, blank=True
+    )
+    user = models.ManyToManyField(
+        get_user_model(),
     )
 
-    def __str__(self):
-        return self.description
+    # "title": STRING, "description": STRING, "user_id": ARRAY
 
-    class Meta:
-        verbose_name = 'Item'
-        verbose_name_plural = 'Itens'
+    def __str__(self):
+        return self.title
+
+
+class Tempo(models.Model):
+    started_at = models.DateTimeField(
+        verbose_name="Inicio do Trabalho",
+    )
+    ended_at = models.DateTimeField(
+        verbose_name="Fim do Trabalho",
+    )
+    projeto = models.ForeignKey(
+        Projeto,
+        related_name="projetos",
+        on_delete=models.CASCADE
+    )
+
+    # usuario = models.ForeignKey()
+
+    #  "project_id": INT, "user_id": INT, "started_at": DATETIME, "ended_at": DATETIME,
+
+    def __str__(self):
+        return f'{self.started_at}-{self.ended_at}'
+
+# model User "name": STRING, "email": STRING, "login": STRING; "password": STRING }
